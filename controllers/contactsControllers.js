@@ -3,6 +3,7 @@ const {
   createContactSchema,
   updateContactSchema,
 } = require("../schemas/contactsSchemas.js");
+const User = require("../models/userModel.js");
 
 exports.getAllContacts = async (req, res) => {
   res.status(200).json(contacts);
@@ -25,18 +26,15 @@ exports.createContact = async (req, res) => {
 
   if (error) return res.status(400).json({ message: error.message });
 
-  res.status(201).json(newContact);
+  const newUser = await User.create(body);
+
+  res.status(201).json({ message: "Good" });
 };
 
 exports.updateContact = async (req, res) => {
   const { value: body, error } = updateContactSchema.validate(req.body);
 
   if (error) return res.status(400).json({ message: error.message });
-
-  const updatedContact = await contactsService.updateContact(
-    req.params.id,
-    body
-  );
 
   if (!updatedContact) return res.status(404).json({ message: "Not found" });
 
