@@ -1,8 +1,23 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
-
+const mongoose = require("mongoose");
+require("dotenv").config(
+  process.env.NODE_ENV === "dev"
+    ? { path: "./envs/dev.env" }
+    : { path: "./envs/default.env" }
+);
 const contactsRouter = require("./routes/contactsRouter.js");
+
+console.log(`Running in ${process.env.NODE_ENV ?? "defaut"} mode.`);
+
+mongoose
+  .connect(process.env.DB)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => {
+    console.log(err);
+    process.exit(1);
+  });
 
 const app = express();
 
