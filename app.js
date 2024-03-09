@@ -1,12 +1,12 @@
-const express = require("express");
-const morgan = require("morgan");
-const cors = require("cors");
-const mongoose = require("mongoose");
 require("dotenv").config(
   process.env.NODE_ENV === "dev"
     ? { path: "./envs/dev.env" }
     : { path: "./envs/default.env" }
 );
+const express = require("express");
+const morgan = require("morgan");
+const cors = require("cors");
+const mongoose = require("mongoose");
 const contactsRouter = require("./routes/contactsRouter.js");
 const serverConfig = require("./configs/serverConfig.js");
 
